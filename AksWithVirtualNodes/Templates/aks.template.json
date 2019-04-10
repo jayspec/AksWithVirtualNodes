@@ -34,7 +34,8 @@
   "variables": {
     "logAnalyticsResourceId": "[resourceId(parameters('logAnalyticsResourceGroup'), 'Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsName'))]",
     "vnetName": "[concat(parameters('clusterName'), '-vnet')]",
-    "vnetDeploymentFileName": "vnet.template.json"
+    "vnetDeploymentFileName": "vnet.template.json",
+    "roleAssignmentDeploymentFileName": "roleAssignments.template.json"
   },
   "resources": [
     {
@@ -52,7 +53,27 @@
             "value": "[parameters('clusterLocation')]"
           },
           "vnetName": {
-            "value":  "[variables('vnetName')]"
+            "value": "[variables('vnetName')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "name": "roleAssignmentTemplate",
+      "dependsOn": [
+        "vnetTemplate"
+      ],
+      "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', parameters('deploymentTemplateFolder'), '/', variables('roleAssignmentDeploymentFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "servicePrincipalClientId": {
+            "value": "[parameters('servicePrincipalClientId')]"
           }
         }
       }
@@ -63,7 +84,8 @@
       "name": "[parameters('clusterName')]",
       "location": "[parameters('clusterLocation')]",
       "dependsOn": [
-        "vnetTemplate"
+        "vnetTemplate",
+        "roleAssignmentTemplate"
       ],
       "properties": {
         "kubernetesVersion": "1.12.7",

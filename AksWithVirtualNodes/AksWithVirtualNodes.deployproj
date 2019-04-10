@@ -31,6 +31,9 @@
     <Content Include="Deploy-AzureResourceGroup.ps1" />
     <Content Include="Templates\aks.template.json" />
     <Content Include="Templates\vnet.template.json" />
+    <Content Include="Templates\roleAssignments.template.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

@@ -1,0 +1,46 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "servicePrincipalClientId": {
+      "type": "string"
+    },
+    "defaultSubnetName": {
+      "type": "string",
+      "defaultValue": "default"
+    },
+    "aciSubnetName": {
+      "type": "string",
+      "defaultValue": "virtual-node-aci"
+    }
+  },
+  "variables": {
+    "defaultSubnetRoleAssignmentName": "[guid(resourceGroup().id, 'defaultSubnetRole')]",
+    "aciSubnetRoleAssignmentName": "[guid(resourceGroup().id, 'aciSubnetRole')]",
+    "networkContributorRoleDefinitionId": "4d97b98b-1d4f-4787-a291-c67834d212e7"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2017-09-01",
+      "name": "[variables('defaultSubnetRoleAssignmentName')]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('networkContributorRoleDefinitionId'))]",
+        "principalId": "[parameters('servicePrincipalClientId')]",
+        "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('defaultSubnetName'))]"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2017-09-01",
+      "name": "[variables('aciSubnetRoleAssignmentName')]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('networkContributorRoleDefinitionId'))]",
+        "principalId": "[parameters('servicePrincipalClientId')]",
+        "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('aciSubnetName'))]"
+      }
+    }
+  ],
+  "outputs": {
+  }
+}
