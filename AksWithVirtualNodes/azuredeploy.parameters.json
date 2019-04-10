@@ -3,29 +3,52 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "environmentName": {
-      "value": "dev"
+      "value": "dev",
+      "metadata": {
+        "description": "The name of the environment to create. Will be prepended to the name of the cluster and the VNet."
+      }
     },
     "clusterName": {
-      "value": "my-aks-cluster"
-    },
-    "clusterLocation": {
-      "value": "eastus"
+      "value": "GEN-UNIQUE",
+      "metadata": {
+        "description": "The name of the Kubernetes cluster to create.  Will be prepended by the environmentName."
+      }
     },
     "logAnalyticsResourceGroup": {
-      "value": "my-log-analytics-resource-group"
+      "value": "GEN-LOG-ANALYTICS-RESOURCEGROUP-NAME",
+      "metadata": {
+        "description": "The name of the resouce group in which you have a Log Analytics workspace."
+      }
     },
     "logAnalyticsName": {
-      "value": "my-log-analytics-workspace-name"
+      "value": "GEN-LOG-ANALYTICS-NAME",
+      "metadata": {
+        "description": "The name of your Log Analytics workspace."
+      }
     },
     "servicePrincipalClientId": {
-      "value": "my-service-principal-client-id"
+      "value": "GEN-GUID",
+      "metadata": {
+        "description": "The ID of the cluster infrastructure service principal."
+      }
+    },
+    "servicePrincipalKeyVaultSecretName": {
+      "value": "GEN-UNIQUE",
+      "metadata": {
+        "description": "The name of the KeyVault secret that contains the client secret for the cluster infrastructure service principal."
+      }
     },
     "keyVaultResourceGroup": {
-      "value": "my-keyvault-resource-group"
+      "value": "GEN-KEYVAULT-RESOURCEGROUP-NAME",
+      "metadata": {
+        "description":  "The name of the resource group where the KeyVault containing the service principal client secret can be found."
+      }
     },
     "keyVaultName": {
-      "value": "my-keyvault"
+      "value": "GEN-KEYVAULT-NAME",
+      "metadata": {
+        "description":  "The name of the KeyVault containing the service principal client secret."
+      }
     }
-
   }
 }

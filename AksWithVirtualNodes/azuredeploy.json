@@ -15,7 +15,8 @@
       "type": "string"
     },
     "clusterLocation": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
     },
     "logAnalyticsResourceGroup": {
       "type": "string"
@@ -24,6 +25,9 @@
       "type": "string"
     },
     "servicePrincipalClientId": {
+      "type": "string"
+    },
+    "servicePrincipalKeyVaultSecretName": {
       "type": "string"
     },
     "keyVaultResourceGroup": {
@@ -76,7 +80,7 @@
               "keyVault": {
                 "id": "[resourceId(parameters('keyVaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
               },
-              "secretName": "aksServicePrincipalSecret"
+              "secretName": "[parameters('servicePrincipalKeyVaultSecretName')]"
             }
           },
           "deploymentTemplateFolder": {
