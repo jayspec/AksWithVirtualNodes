@@ -6,25 +6,25 @@
       "value": "dev"
     },
     "clusterName": {
-      "value": "test-aks"
+      "value": "my-aks-cluster"
     },
     "clusterLocation": {
       "value": "eastus"
     },
     "logAnalyticsResourceGroup": {
-      "value": "TicketManager_Shared"
+      "value": "my-log-analytics-resource-group"
     },
     "logAnalyticsName": {
-      "value": "test-aks-la"
+      "value": "my-log-analytics-workspace-name"
     },
     "servicePrincipalClientId": {
-      "value": "ff8fb321-eef4-4eae-a14a-7b7864d6113b"
+      "value": "my-service-principal-client-id"
     },
     "keyVaultResourceGroup": {
-      "value": "TicketManager_Shared"
+      "value": "my-keyvault-resource-group"
     },
     "keyVaultName": {
-      "value": "ticketmanagerdevjaspecla"
+      "value": "my-keyvault"
     }
 
   }
