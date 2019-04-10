@@ -2,5 +2,30 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "environmentName": {
+      "value": "dev"
+    },
+    "clusterName": {
+      "value": "test-aks"
+    },
+    "clusterLocation": {
+      "value": "eastus"
+    },
+    "logAnalyticsResourceGroup": {
+      "value": "TicketManager_Shared"
+    },
+    "logAnalyticsName": {
+      "value": "test-aks-la"
+    },
+    "servicePrincipalClientId": {
+      "value": "ff8fb321-eef4-4eae-a14a-7b7864d6113b"
+    },
+    "keyVaultResourceGroup": {
+      "value": "TicketManager_Shared"
+    },
+    "keyVaultName": {
+      "value": "ticketmanagerdevjaspecla"
+    }
+
   }
 }

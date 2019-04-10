@@ -8,23 +8,23 @@
     "_artifactsLocationSasToken": {
       "type": "securestring"
     },
-    "cluster_name": {
+    "clusterName": {
       "type": "string"
     },
-    "cluster_location": {
+    "clusterLocation": {
       "defaultValue": "eastus",
       "type": "string"
     },
-    "log_analytics_resource_group": {
+    "logAnalyticsResourceGroup": {
       "type": "string"
     },
-    "log_analytics_name": {
+    "logAnalyticsName": {
       "type": "string"
     },
-    "service_principal_client_id": {
+    "servicePrincipalClientId": {
       "type": "string"
     },
-    "service_principal_client_secret": {
+    "servicePrincipalClientSecret": {
       "type": "securestring"
     },
     "deploymentTemplateFolder": {
@@ -32,9 +32,9 @@
     }
   },
   "variables": {
-    "log_analytics_resource_id": "[resourceId(parameters('log_analytics_resource_group'), 'Microsoft.OperationalInsights/workspaces', parameters('log_analytics_name'))]",
-    "vnet_name": "[concat(parameters('cluster_name'), '-vnet')]",
-    "vnet_deployment_file_name": "vnet.template.json"
+    "logAnalyticsResourceId": "[resourceId(parameters('logAnalyticsResourceGroup'), 'Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsName'))]",
+    "vnetName": "[concat(parameters('clusterName'), '-vnet')]",
+    "vnetDeploymentFileName": "vnet.template.json"
   },
   "resources": [
     {
@@ -44,15 +44,15 @@
       "properties": {
         "mode": "incremental",
         "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'), '/', parameters('deploymentTemplateFolder'), '/', variables('vnet_deployment_file_name'), parameters('_artifactsLocationSasToken'))]",
+          "uri": "[concat(parameters('_artifactsLocation'), '/', parameters('deploymentTemplateFolder'), '/', variables('vnetDeploymentFileName'), parameters('_artifactsLocationSasToken'))]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "vnet_location": {
-            "value": "[parameters('cluster_location')]"
+          "vnetLocation": {
+            "value": "[parameters('clusterLocation')]"
           },
-          "vnet_name": {
-            "value":  "[variables('vnet_name')]"
+          "vnetName": {
+            "value":  "[variables('vnetName')]"
           }
         }
       }
@@ -60,14 +60,14 @@
     {
       "type": "Microsoft.ContainerService/managedClusters",
       "apiVersion": "2018-03-31",
-      "name": "[parameters('cluster_name')]",
-      "location": "[parameters('cluster_location')]",
+      "name": "[parameters('clusterName')]",
+      "location": "[parameters('clusterLocation')]",
       "dependsOn": [
         "vnetTemplate"
       ],
       "properties": {
         "kubernetesVersion": "1.12.7",
-        "dnsPrefix": "[concat(parameters('cluster_name'), '-dns')]",
+        "dnsPrefix": "[concat(parameters('clusterName'), '-dns')]",
         "agentPoolProfiles": [
           {
             "name": "agentpool",
@@ -75,14 +75,14 @@
             "vmSize": "Standard_DS2_v2",
             "osDiskSizeGB": 100,
             "storageProfile": "ManagedDisks",
-            "vnetSubnetID": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnet_name'), 'default')]",
+            "vnetSubnetID": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), 'default')]",
             "maxPods": 30,
             "osType": "Linux"
           }
         ],
         "servicePrincipalProfile": {
-          "clientId": "[parameters('service_principal_client_id')]",
-          "secret": "[parameters('service_principal_client_secret')]"
+          "clientId": "[parameters('servicePrincipalClientId')]",
+          "secret": "[parameters('servicePrincipalClientSecret')]"
         },
         "addonProfiles": {
           "aciConnectorLinux": {
@@ -98,7 +98,7 @@
           "omsagent": {
             "enabled": true,
             "config": {
-              "logAnalyticsWorkspaceResourceID": "[variables('log_analytics_resource_id')]"
+              "logAnalyticsWorkspaceResourceID": "[variables('logAnalyticsResourceId')]"
             }
           }
         },

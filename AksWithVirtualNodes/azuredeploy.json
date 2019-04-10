@@ -7,13 +7,35 @@
     },
     "_artifactsLocationSasToken": {
       "type": "securestring"
+    },
+    "environmentName": {
+      "type": "string"
+    },
+    "clusterName": {
+      "type": "string"
+    },
+    "clusterLocation": {
+      "type": "string"
+    },
+    "logAnalyticsResourceGroup": {
+      "type": "string"
+    },
+    "logAnalyticsName": {
+      "type": "string"
+    },
+    "servicePrincipalClientId": {
+      "type": "string"
+    },
+    "keyVaultResourceGroup": {
+      "type": "string"
+    },
+    "keyVaultName": {
+      "type":  "string"
     }
   },
   "variables": {
     "deploymentTemplateFolder": "Templates",
-    "aksDeploymentTemplateFileName": "aks.template.json",
-    "key_vault_resource_group": "TicketManager_Shared",
-    "key_vault_name": "ticketmanagerdevjaspecla"
+    "aksDeploymentTemplateFileName": "aks.template.json"
   },
   "resources": [
     {
@@ -34,25 +56,25 @@
           "_artifactsLocationSasToken": {
             "value": "[parameters('_artifactsLocationSasToken')]"
           },
-          "cluster_name": {
-            "value": "test-aks"
+          "clusterName": {
+            "value": "[concat(parameters('environmentName'), '-', parameters('clusterName'))]"
           },
-          "cluster_location": {
-            "value": "eastus"
+          "clusterLocation": {
+            "value": "[parameters('clusterLocation')]"
           },
-          "log_analytics_resource_group": {
-            "value": "TicketManager_Shared"
+          "logAnalyticsResourceGroup": {
+            "value": "[parameters('logAnalyticsResourceGroup')]"
           },
-          "log_analytics_name": {
-            "value": "test-aks-la"
+          "logAnalyticsName": {
+            "value": "[parameters('logAnalyticsName')]"
           },
-          "service_principal_client_id": {
-            "value": "ff8fb321-eef4-4eae-a14a-7b7864d6113b"
+          "servicePrincipalClientId": {
+            "value": "[parameters('servicePrincipalClientId')]"
           },
-          "service_principal_client_secret": {
+          "servicePrincipalClientSecret": {
             "reference": {
               "keyVault": {
-                "id": "[resourceId(variables('key_vault_resource_group'), 'Microsoft.KeyVault/vaults', variables('key_vault_name'))]"
+                "id": "[resourceId(parameters('keyVaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
               },
               "secretName": "aksServicePrincipalSecret"
             }
