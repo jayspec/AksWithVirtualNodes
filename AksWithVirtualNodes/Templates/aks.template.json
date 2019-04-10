@@ -1,0 +1,115 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "_artifactsLocation": {
+      "type": "string"
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring"
+    },
+    "cluster_name": {
+      "type": "string"
+    },
+    "cluster_location": {
+      "defaultValue": "eastus",
+      "type": "string"
+    },
+    "log_analytics_resource_group": {
+      "type": "string"
+    },
+    "log_analytics_name": {
+      "type": "string"
+    },
+    "service_principal_client_id": {
+      "type": "string"
+    },
+    "service_principal_client_secret": {
+      "type": "securestring"
+    },
+    "deploymentTemplateFolder": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "log_analytics_resource_id": "[resourceId(parameters('log_analytics_resource_group'), 'Microsoft.OperationalInsights/workspaces', parameters('log_analytics_name'))]",
+    "vnet_name": "[concat(parameters('cluster_name'), '-vnet')]",
+    "vnet_deployment_file_name": "vnet.template.json"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "name": "vnetTemplate",
+      "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', parameters('deploymentTemplateFolder'), '/', variables('vnet_deployment_file_name'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vnet_location": {
+            "value": "[parameters('cluster_location')]"
+          },
+          "vnet_name": {
+            "value":  "[variables('vnet_name')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.ContainerService/managedClusters",
+      "apiVersion": "2018-03-31",
+      "name": "[parameters('cluster_name')]",
+      "location": "[parameters('cluster_location')]",
+      "dependsOn": [
+        "vnetTemplate"
+      ],
+      "properties": {
+        "kubernetesVersion": "1.12.7",
+        "dnsPrefix": "[concat(parameters('cluster_name'), '-dns')]",
+        "agentPoolProfiles": [
+          {
+            "name": "agentpool",
+            "count": 1,
+            "vmSize": "Standard_DS2_v2",
+            "osDiskSizeGB": 100,
+            "storageProfile": "ManagedDisks",
+            "vnetSubnetID": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnet_name'), 'default')]",
+            "maxPods": 30,
+            "osType": "Linux"
+          }
+        ],
+        "servicePrincipalProfile": {
+          "clientId": "[parameters('service_principal_client_id')]",
+          "secret": "[parameters('service_principal_client_secret')]"
+        },
+        "addonProfiles": {
+          "aciConnectorLinux": {
+            "enabled": true,
+            "config": {
+              "SubnetName": "virtual-node-aci"
+            }
+          },
+          "httpApplicationRouting": {
+            "enabled": false,
+            "config": {}
+          },
+          "omsagent": {
+            "enabled": true,
+            "config": {
+              "logAnalyticsWorkspaceResourceID": "[variables('log_analytics_resource_id')]"
+            }
+          }
+        },
+        "enableRBAC": true,
+        "networkProfile": {
+          "networkPlugin": "azure",
+          "serviceCidr": "10.0.0.0/16",
+          "dnsServiceIP": "10.0.0.10",
+          "dockerBridgeCidr": "172.17.0.1/16"
+        }
+      }
+    }
+  ]
+}

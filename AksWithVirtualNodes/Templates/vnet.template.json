@@ -1,0 +1,95 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnet_name": {
+      "type": "string"
+    },
+    "vnet_location": {
+      "defaultValue": "eastus",
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2018-12-01",
+      "name": "[parameters('vnet_name')]",
+      "location": "[parameters('vnet_location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/8"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "default",
+            "properties": {
+              "addressPrefix": "10.240.0.0/16",
+              "delegations": []
+            }
+          },
+          {
+            "name": "virtual-node-aci",
+            "properties": {
+              "addressPrefix": "10.241.0.0/16",
+              "delegations": [
+                {
+                  "name": "aciDelegation",
+                  "properties": {
+                    "serviceName": "Microsoft.ContainerInstance/containerGroups",
+                    "actions": [
+                      "Microsoft.Network/virtualNetworks/subnets/action"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "virtualNetworkPeerings": [],
+        "enableDdosProtection": false,
+        "enableVmProtection": false
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2018-12-01",
+      "name": "[concat(parameters('vnet_name'), '/virtual-node-aci')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnet_name'))]"
+      ],
+      "properties": {
+        "addressPrefix": "10.241.0.0/16",
+        "delegations": [
+          {
+            "name": "aciDelegation",
+            "properties": {
+              "serviceName": "Microsoft.ContainerInstance/containerGroups",
+              "actions": [
+                "Microsoft.Network/virtualNetworks/subnets/action"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2018-12-01",
+      "name": "[concat(parameters('vnet_name'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnet_name'))]"
+      ],
+      "properties": {
+        "addressPrefix": "10.240.0.0/16",
+        "delegations": []
+      }
+    }
+  ],
+  "outputs": {
+  }
+}

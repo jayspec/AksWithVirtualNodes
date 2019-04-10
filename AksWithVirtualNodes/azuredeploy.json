@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "_artifactsLocation": {
+      "type": "string"
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "deploymentTemplateFolder": "Templates",
+    "aksDeploymentTemplateFileName": "aks.template.json",
+    "key_vault_resource_group": "TicketManager_Shared",
+    "key_vault_name": "ticketmanagerdevjaspecla"
+  },
+  "resources": [
+    {
+      "name": "aksDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [ ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('deploymentTemplateFolder'), '/', variables('aksDeploymentTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "_artifactsLocation": {
+            "value": "[parameters('_artifactsLocation')]"
+          },
+          "_artifactsLocationSasToken": {
+            "value": "[parameters('_artifactsLocationSasToken')]"
+          },
+          "cluster_name": {
+            "value": "test-aks"
+          },
+          "cluster_location": {
+            "value": "eastus"
+          },
+          "log_analytics_resource_group": {
+            "value": "TicketManager_Shared"
+          },
+          "log_analytics_name": {
+            "value": "test-aks-la"
+          },
+          "service_principal_client_id": {
+            "value": "ff8fb321-eef4-4eae-a14a-7b7864d6113b"
+          },
+          "service_principal_client_secret": {
+            "reference": {
+              "keyVault": {
+                "id": "[resourceId(variables('key_vault_resource_group'), 'Microsoft.KeyVault/vaults', variables('key_vault_name'))]"
+              },
+              "secretName": "aksServicePrincipalSecret"
+            }
+          },
+          "deploymentTemplateFolder": {
+            "value": "[variables('deploymentTemplateFolder')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
