@@ -18,8 +18,8 @@
     }
   },
   "variables": {
-    "defaultSubnetRoleAssignmentName": "[guid(resourceGroup().id, 'defaultSubnetRole')]",
-    "aciSubnetRoleAssignmentName": "[guid(resourceGroup().id, 'aciSubnetRole')]",
+    "defaultSubnetRoleAssignmentName": "[concat(parameters('vnetName'), '/', parameters('defaultSubnetName'), '/Microsoft.Authorization/', guid(resourceGroup().id, 'defaultSubnetRole'))]",
+    "aciSubnetRoleAssignmentName": "[concat(parameters('vnetName'), '/', parameters('aciSubnetName'), '/Microsoft.Authorization/', guid(resourceGroup().id, 'aciSubnetRole'))]",
     "networkContributorRoleDefinitionId": "4d97b98b-1d4f-4787-a291-c67834d212e7"
   },
   "resources": [

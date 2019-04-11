@@ -9,43 +9,43 @@
       }
     },
     "clusterName": {
-      "value": "GEN-UNIQUE",
+      "value": "aks-rc-deploy",
       "metadata": {
         "description": "The name of the Kubernetes cluster to create.  Will be prepended by the environmentName."
       }
     },
     "logAnalyticsResourceGroup": {
-      "value": "GEN-LOG-ANALYTICS-RESOURCEGROUP-NAME",
+      "value": "TicketManager_Shared",
       "metadata": {
         "description": "The name of the resouce group in which you have a Log Analytics workspace."
       }
     },
     "logAnalyticsName": {
-      "value": "GEN-LOG-ANALYTICS-NAME",
+      "value": "test-aks-la",
       "metadata": {
         "description": "The name of your Log Analytics workspace."
       }
     },
     "servicePrincipalClientId": {
-      "value": "GEN-GUID",
+      "value": "ff8fb321-eef4-4eae-a14a-7b7864d6113b",
       "metadata": {
         "description": "The ID of the cluster infrastructure service principal."
       }
     },
     "servicePrincipalKeyVaultSecretName": {
-      "value": "GEN-UNIQUE",
+      "value": "aksServicePrincipalSecret",
       "metadata": {
         "description": "The name of the KeyVault secret that contains the client secret for the cluster infrastructure service principal."
       }
     },
     "keyVaultResourceGroup": {
-      "value": "GEN-KEYVAULT-RESOURCEGROUP-NAME",
+      "value": "TicketManager_Shared",
       "metadata": {
         "description":  "The name of the resource group where the KeyVault containing the service principal client secret can be found."
       }
     },
     "keyVaultName": {
-      "value": "GEN-KEYVAULT-NAME",
+      "value": "ticketmanagerdevjaspecla",
       "metadata": {
         "description":  "The name of the KeyVault containing the service principal client secret."
       }
