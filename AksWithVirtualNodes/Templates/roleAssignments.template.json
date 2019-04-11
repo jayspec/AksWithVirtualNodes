@@ -5,6 +5,9 @@
     "servicePrincipalClientId": {
       "type": "string"
     },
+    "vnetName": {
+      "type": "string"
+    },
     "defaultSubnetName": {
       "type": "string",
       "defaultValue": "default"
@@ -27,7 +30,7 @@
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('networkContributorRoleDefinitionId'))]",
         "principalId": "[parameters('servicePrincipalClientId')]",
-        "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('defaultSubnetName'))]"
+        "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('defaultSubnetName'))]"
       }
     },
     {
@@ -37,7 +40,7 @@
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('networkContributorRoleDefinitionId'))]",
         "principalId": "[parameters('servicePrincipalClientId')]",
-        "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('aciSubnetName'))]"
+        "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('aciSubnetName'))]"
       }
     }
   ],

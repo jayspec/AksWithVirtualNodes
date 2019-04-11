@@ -74,6 +74,9 @@
         "parameters": {
           "servicePrincipalClientId": {
             "value": "[parameters('servicePrincipalClientId')]"
+          },
+          "vnetName": {
+            "value": "[variables('vnetName')]"
           }
         }
       }
