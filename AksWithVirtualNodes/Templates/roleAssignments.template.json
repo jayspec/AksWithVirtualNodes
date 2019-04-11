@@ -24,7 +24,7 @@
   },
   "resources": [
     {
-      "type": "Microsoft.Authorization/roleAssignments",
+      "type": "Microsoft.Network/virtualNetworks/subnets/providers/roleAssignments",
       "apiVersion": "2017-09-01",
       "name": "[variables('defaultSubnetRoleAssignmentName')]",
       "properties": {
@@ -34,7 +34,7 @@
       }
     },
     {
-      "type": "Microsoft.Authorization/roleAssignments",
+      "type": "Microsoft.Network/virtualNetworks/subnets/providers/roleAssignments",
       "apiVersion": "2017-09-01",
       "name": "[variables('aciSubnetRoleAssignmentName')]",
       "properties": {
