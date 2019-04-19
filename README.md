@@ -8,6 +8,9 @@ It also creates the "Network Contributor" role assignments necessary for the AKS
 1. An Azure AD Application and service principal must already exist. See [Service principals with Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal)
 2. A KeyVault instance must already exist.  The KeyVault should contain the Azure AD Application secret in its own secret store.
 3. A Log Analytics workspace must already exist.
+4. Whichever build system you use to deploy this (like Azure Pipelines, for example), the service principal you use to connect to Azure needs to have *Owner* rights on the Azure subscription it's being 
+	deployed to, rather than Contributor, which is the default if you just click "Authorize" in Azure DevOps.  It needs this level of access (or perhaps some more finely tailored custom role) in order 
+	to create the role assignments for the network.
 
 ## Parameters
 
