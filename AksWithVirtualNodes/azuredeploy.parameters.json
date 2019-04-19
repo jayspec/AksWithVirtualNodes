@@ -3,55 +3,55 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "environmentName": {
-      "value": "dev",
+      "value": "[YOUR_ENVIRONMENT_NAME]",
       "metadata": {
-        "description": "The name of the environment to create. Will be prepended to the name of the cluster and the VNet."
+        "description": "The name of the environment to create. Will be prepended to the name of the cluster and the VNet. Like 'dev', 'qa', or 'prod', for example."
       }
     },
     "clusterName": {
-      "value": "aks-rc-deploy",
+      "value": "[YOUR_CLUSTER_NAME]",
       "metadata": {
         "description": "The name of the Kubernetes cluster to create.  Will be prepended by the environmentName."
       }
     },
     "logAnalyticsResourceGroup": {
-      "value": "TicketManager_Shared",
+      "value": "[YOUR_LOG_ANALYTICS_RESOURCE_GROUP]",
       "metadata": {
         "description": "The name of the resouce group in which you have a Log Analytics workspace."
       }
     },
     "logAnalyticsName": {
-      "value": "test-aks-la",
+      "value": "[YOUR_LOG_ANALYTICS_WORKSPACE_NAME]",
       "metadata": {
         "description": "The name of your Log Analytics workspace."
       }
     },
     "azureAdApplicationId": {
-      "value": "ff8fb321-eef4-4eae-a14a-7b7864d6113b",
+      "value": "[YOUR_AZURE_AD_APPLICATION_ID]",
       "metadata": {
         "description": "The client (application) ID of the cluster infrastructure service principal."
       }
     },
     "servicePrincipalObjectId": {
-      "value": "cdbf0890-eded-4c15-bd64-62aeae6beac9",
+      "value": "[YOUR_SERVICE_PRINCIPAL_OBJECT_ID]",
       "metadata": {
         "description": "The object ID of the cluster infrastructure service principal."
       }
     },
     "azureAdApplicationKeyVaultSecretName": {
-      "value": "aksServicePrincipalSecret",
+      "value": "[YOUR_KEY_VAULT_SECRET_NAME]",
       "metadata": {
         "description": "The name of the KeyVault secret that contains the client secret for the cluster infrastructure service principal."
       }
     },
     "keyVaultResourceGroup": {
-      "value": "TicketManager_Shared",
+      "value": "[YOUR_KEY_VAULT_RESOURCE_GROUP]",
       "metadata": {
         "description": "The name of the resource group where the KeyVault containing the service principal client secret can be found."
       }
     },
     "keyVaultName": {
-      "value": "ticketmanagerdevjaspecla",
+      "value": "[YOUR_KEY_VAULT_NAME]",
       "metadata": {
         "description": "The name of the KeyVault containing the service principal client secret."
       }

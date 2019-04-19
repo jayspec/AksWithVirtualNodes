@@ -1,11 +1,12 @@
 # AksWithVirtualNodes
 
-A project to demonstrate how to create an AKS cluster using the new Virtual Nodes feature.
+This is a project to demonstrate how to create an Azure Kubernetes Service cluster using the new Virtual Nodes feature.  It creates a virtual network and the two subnets required for the virtual nodes.
+It also creates the "Network Contributor" role assignments necessary for the AKS cluster to manage those networks.
 
 ## Prerequisites
 
 1. An Azure AD Application and service principal must already exist. See [Service principals with Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal)
-2. A KeyVault instance must already exist.  The KeyVault should contain the service principal's secret in its own secret store.
+2. A KeyVault instance must already exist.  The KeyVault should contain the Azure AD Application secret in its own secret store.
 3. A Log Analytics workspace must already exist.
 
 ## Parameters
@@ -23,7 +24,7 @@ A project to demonstrate how to create an AKS cluster using the new Virtual Node
 	you're probably using the wrong Object ID.
 * *azureAdApplicationKeyVaultSecretName*: The name of the KeyVault secret that contains the client secret for the cluster infrastructure Azure AD Application.
 * *keyVaultResourceGroup*: The name of the resource group where the KeyVault containing the service principal client secret can be found.
-* *keyVaultName*: The name of the KeyVault containing the service principal client secret.
+* *keyVaultName*: The name of the KeyVault containing the service principal client secret.  The KeyVault must allow access to Azure Resource Manager for deployment.
 
 ####You can also override:
 
