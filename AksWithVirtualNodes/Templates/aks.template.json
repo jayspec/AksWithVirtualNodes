@@ -21,7 +21,10 @@
     "logAnalyticsName": {
       "type": "string"
     },
-    "servicePrincipalClientId": {
+    "azureAdApplicationId": {
+      "type": "string"
+    },
+    "servicePrincipalObjectId": {
       "type": "string"
     },
     "servicePrincipalClientSecret": {
@@ -72,8 +75,8 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "servicePrincipalClientId": {
-            "value": "[parameters('servicePrincipalClientId')]"
+          "servicePrincipalObjectId": {
+            "value": "[parameters('servicePrincipalObjectId')]"
           },
           "vnetName": {
             "value": "[variables('vnetName')]"
@@ -106,7 +109,7 @@
           }
         ],
         "servicePrincipalProfile": {
-          "clientId": "[parameters('servicePrincipalClientId')]",
+          "clientId": "[parameters('azureAdApplicationId')]",
           "secret": "[parameters('servicePrincipalClientSecret')]"
         },
         "addonProfiles": {

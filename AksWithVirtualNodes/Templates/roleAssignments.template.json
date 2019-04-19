@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "servicePrincipalClientId": {
+    "servicePrincipalObjectId": {
       "type": "string"
     },
     "vnetName": {
@@ -29,7 +29,7 @@
       "name": "[variables('defaultSubnetRoleAssignmentName')]",
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('networkContributorRoleDefinitionId'))]",
-        "principalId": "[parameters('servicePrincipalClientId')]",
+        "principalId": "[parameters('servicePrincipalObjectId')]",
         "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('defaultSubnetName'))]"
       }
     },
@@ -39,7 +39,7 @@
       "name": "[variables('aciSubnetRoleAssignmentName')]",
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('networkContributorRoleDefinitionId'))]",
-        "principalId": "[parameters('servicePrincipalClientId')]",
+        "principalId": "[parameters('servicePrincipalObjectId')]",
         "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('aciSubnetName'))]"
       }
     }

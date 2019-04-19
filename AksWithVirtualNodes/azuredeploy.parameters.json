@@ -26,13 +26,19 @@
         "description": "The name of your Log Analytics workspace."
       }
     },
-    "servicePrincipalClientId": {
+    "azureAdApplicationId": {
       "value": "ff8fb321-eef4-4eae-a14a-7b7864d6113b",
       "metadata": {
-        "description": "The ID of the cluster infrastructure service principal."
+        "description": "The client (application) ID of the cluster infrastructure service principal."
       }
     },
-    "servicePrincipalKeyVaultSecretName": {
+    "servicePrincipalObjectId": {
+      "value": "cdbf0890-eded-4c15-bd64-62aeae6beac9",
+      "metadata": {
+        "description": "The object ID of the cluster infrastructure service principal."
+      }
+    },
+    "azureAdApplicationKeyVaultSecretName": {
       "value": "aksServicePrincipalSecret",
       "metadata": {
         "description": "The name of the KeyVault secret that contains the client secret for the cluster infrastructure service principal."
@@ -41,13 +47,13 @@
     "keyVaultResourceGroup": {
       "value": "TicketManager_Shared",
       "metadata": {
-        "description":  "The name of the resource group where the KeyVault containing the service principal client secret can be found."
+        "description": "The name of the resource group where the KeyVault containing the service principal client secret can be found."
       }
     },
     "keyVaultName": {
       "value": "ticketmanagerdevjaspecla",
       "metadata": {
-        "description":  "The name of the KeyVault containing the service principal client secret."
+        "description": "The name of the KeyVault containing the service principal client secret."
       }
     }
   }

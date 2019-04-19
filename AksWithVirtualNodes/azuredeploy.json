@@ -24,17 +24,20 @@
     "logAnalyticsName": {
       "type": "string"
     },
-    "servicePrincipalClientId": {
+    "azureAdApplicationId": {
       "type": "string"
     },
-    "servicePrincipalKeyVaultSecretName": {
+    "servicePrincipalObjectId": {
+      "type": "string"
+    },
+    "azureAdApplicationKeyVaultSecretName": {
       "type": "string"
     },
     "keyVaultResourceGroup": {
       "type": "string"
     },
     "keyVaultName": {
-      "type":  "string"
+      "type": "string"
     }
   },
   "variables": {
@@ -72,15 +75,18 @@
           "logAnalyticsName": {
             "value": "[parameters('logAnalyticsName')]"
           },
-          "servicePrincipalClientId": {
-            "value": "[parameters('servicePrincipalClientId')]"
+          "azureAdApplicationId": {
+            "value": "[parameters('azureAdApplicationId')]"
+          },
+          "servicePrincipalObjectId": {
+            "value": "[parameters('servicePrincipalObjectId')]"
           },
           "servicePrincipalClientSecret": {
             "reference": {
               "keyVault": {
                 "id": "[resourceId(parameters('keyVaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
               },
-              "secretName": "[parameters('servicePrincipalKeyVaultSecretName')]"
+              "secretName": "[parameters('azureAdApplicationKeyVaultSecretName')]"
             }
           },
           "deploymentTemplateFolder": {
