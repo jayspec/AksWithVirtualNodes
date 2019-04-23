@@ -73,6 +73,9 @@
           "clusterLocation": {
             "value": "[parameters('clusterLocation')]"
           },
+          "kubernetesVersion": {
+            "value": "[parameters('kubernetesVersion')]"
+          },
           "logAnalyticsResourceGroup": {
             "value": "[parameters('logAnalyticsResourceGroup')]"
           },
