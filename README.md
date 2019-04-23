@@ -32,3 +32,4 @@ It also creates the "Network Contributor" role assignments necessary for the AKS
 ####You can also override:
 
 * *clusterLocation*: The Azure Region the cluster will be deployed to.  Defaults to the location of the Resource Group.
+* *kubernetesVersion*: The version of Kubernetes to deploy on the *non-virtual* node.  Defaults to 1.13.5, the latest version at the time of this writing.

@@ -12,7 +12,9 @@
       "type": "string"
     },
     "clusterLocation": {
-      "defaultValue": "eastus",
+      "type": "string"
+    },
+    "kubernetesVersion": {
       "type": "string"
     },
     "logAnalyticsResourceGroup": {
@@ -94,7 +96,7 @@
         "roleAssignmentTemplate"
       ],
       "properties": {
-        "kubernetesVersion": "1.12.7",
+        "kubernetesVersion": "[parameters('kubernetesVersion')]",
         "dnsPrefix": "[concat(parameters('clusterName'), '-dns')]",
         "agentPoolProfiles": [
           {
